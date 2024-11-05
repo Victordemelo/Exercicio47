@@ -192,7 +192,7 @@ public class FrmGerenciaAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_JTableAlterarActionPerformed
 
     private void JTableCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTableCancelarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_JTableCancelarActionPerformed
 
     /**
