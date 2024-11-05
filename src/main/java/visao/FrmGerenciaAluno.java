@@ -4,17 +4,18 @@
  */
 package visao;
 
-/**
- *
- * @author victo
- */
+import modelo.Aluno;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class FrmGerenciaAluno extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmGerenciaAluno
-     */
+    private Aluno objetoaluno;
+
     public FrmGerenciaAluno() {
         initComponents();
+        this.objetoaluno = new Aluno(); // carrega objetoaluno de aluno
     }
 
     /**

@@ -4,17 +4,16 @@
  */
 package visao;
 
-/**
- *
- * @author victo
- */
+import modelo.Aluno;
+import javax.swing.JOptionPane;
+
 public class FrmCadastroAluno extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmCadastroAluno
-     */
+    private Aluno objetoaluno; // cria o vínculo com o Aluno
+
     public FrmCadastroAluno() {
         initComponents();
+        this.objetoaluno = new Aluno(); // carrega objeto vazio de aluno
     }
 
     /**
@@ -72,6 +71,11 @@ public class FrmCadastroAluno extends javax.swing.JFrame {
         });
 
         JBCadastrar.setText("Cadastrar");
+        JBCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBCadastrarActionPerformed(evt);
+            }
+        });
 
         JBCancelar.setText("Cancelar");
         JBCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +161,52 @@ public class FrmCadastroAluno extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_JBCancelarActionPerformed
 
+    private void JBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCadastrarActionPerformed
+        try {
+            // recebendo e validando dados da interface gráfica.
+            String nome = "";
+            int idade = 0;
+            String curso = "";
+            int fase = 0;
+            if (this.JTFnome.getText().length() < 2) {
+                throw new Mensagem("Nome deve conter ao menos 2 caracteres.");
+            } else {
+                nome = this.JTFnome.getText();
+            }
+            if (this.JTFidade.getText().length() <= 0) {
+                throw new Mensagem("Idade deve ser número e maior que zero.");
+            } else {
+                idade = Integer.parseInt(this.JTFidade.getText());
+            }
+            if (this.JTFcurso.getText().length() < 2) {
+                throw new Mensagem("Curso deve conter ao menos 2 caracteres.");
+            } else {
+                curso = this.JTFcurso.getText();
+            }
+            if (this.JTFfase.getText().length() <= 0) {
+                throw new Mensagem("Fase deve ser número e maior que zero.");
+            } else {
+                fase = Integer.parseInt(this.JTFfase.getText());
+            }
+// envia os dados para o Controlador cadastrar
+            if (this.objetoaluno.insertAlunoBD(nome, idade, curso, fase)) {
+                JOptionPane.showMessageDialog(null, "Aluno Cadastrado com Sucesso!");
+// limpa campos da interface
+                this.JTFnome.setText("");
+                this.JTFidade.setText("");
+                this.JTFcurso.setText("");
+                this.JTFfase.setText("");
+            }
+//Exibie no console o aluno cadastrado
+            System.out.println(this.objetoaluno.getMinhaLista().toString());
+        } catch (Mensagem erro) {
+            JOptionPane.showMessageDialog(null, erro.getMessage());
+        } catch (NumberFormatException erro2) {
+            JOptionPane.showMessageDialog(null, "Informe um número válido.");
+        }
+
+    }//GEN-LAST:event_JBCadastrarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -171,16 +221,24 @@ public class FrmCadastroAluno extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmCadastroAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCadastroAluno.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmCadastroAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCadastroAluno.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmCadastroAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCadastroAluno.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmCadastroAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCadastroAluno.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
