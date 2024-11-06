@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package visao;
 
 import modelo.Aluno;
@@ -10,12 +6,30 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmGerenciaAluno extends javax.swing.JFrame {
+//cria o vínculo com o objetoaluno
 
     private Aluno objetoaluno;
+
+    public void carregaTabela() {
+        DefaultTableModel modelo = (DefaultTableModel) this.JTableAlunos.getModel();
+        modelo.setNumRows(0); //Posiciona na primeira linha da tabela
+        //Carrega a lista de objetos aluno
+        ArrayList<Aluno> minhaLista = objetoaluno.getMinhaLista();
+        for (Aluno a : minhaLista) {
+            modelo.addRow(new Object[]{
+                a.getId(),
+                a.getNome(),
+                a.getIdade(),
+                a.getCurso(),
+                a.getFase()
+            });
+        }
+    }
 
     public FrmGerenciaAluno() {
         initComponents();
         this.objetoaluno = new Aluno(); // carrega objetoaluno de aluno
+        this.carregaTabela();
     }
 
     /**
@@ -28,7 +42,7 @@ public class FrmGerenciaAluno extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        JTableAlunos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -37,14 +51,14 @@ public class FrmGerenciaAluno extends javax.swing.JFrame {
         JTFidade = new javax.swing.JTextField();
         JTFcurso = new javax.swing.JTextField();
         JTFfase = new javax.swing.JTextField();
-        JTableApagar = new javax.swing.JButton();
-        JTableAlterar = new javax.swing.JButton();
-        JTableCancelar = new javax.swing.JButton();
+        JBApagar = new javax.swing.JButton();
+        JBAlterar = new javax.swing.JButton();
+        JBCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerenciamento de Alunos");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        JTableAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -55,7 +69,12 @@ public class FrmGerenciaAluno extends javax.swing.JFrame {
                 "ID", "Nome", "Idade", "Curso", "Fase"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        JTableAlunos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTableAlunosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(JTableAlunos);
 
         jLabel1.setText("Nome:");
 
@@ -89,24 +108,24 @@ public class FrmGerenciaAluno extends javax.swing.JFrame {
             }
         });
 
-        JTableApagar.setText("Apagar");
-        JTableApagar.addActionListener(new java.awt.event.ActionListener() {
+        JBApagar.setText("Apagar");
+        JBApagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTableApagarActionPerformed(evt);
+                JBApagarActionPerformed(evt);
             }
         });
 
-        JTableAlterar.setText("Alterar");
-        JTableAlterar.addActionListener(new java.awt.event.ActionListener() {
+        JBAlterar.setText("Alterar");
+        JBAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTableAlterarActionPerformed(evt);
+                JBAlterarActionPerformed(evt);
             }
         });
 
-        JTableCancelar.setText("Cancelar");
-        JTableCancelar.addActionListener(new java.awt.event.ActionListener() {
+        JBCancelar.setText("Cancelar");
+        JBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTableCancelarActionPerformed(evt);
+                JBCancelarActionPerformed(evt);
             }
         });
 
@@ -118,21 +137,19 @@ public class FrmGerenciaAluno extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(JTFnome, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(JTFidade)
-                            .addComponent(JTFcurso)
-                            .addComponent(JTFfase, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(160, 160, 160)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel2)
+                        .addComponent(JTFidade)
+                        .addComponent(JTFcurso)
+                        .addComponent(JTFfase, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JTableApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTableCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JTableAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JBApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47))
             .addComponent(jScrollPane1)
         );
@@ -147,19 +164,19 @@ public class FrmGerenciaAluno extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(JTableApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JBApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addComponent(JTFidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(JTableAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JBAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addComponent(JTFcurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(JTableCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JTFfase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
@@ -184,17 +201,30 @@ public class FrmGerenciaAluno extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JTFfaseActionPerformed
 
-    private void JTableApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTableApagarActionPerformed
+    private void JBApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBApagarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JTableApagarActionPerformed
+    }//GEN-LAST:event_JBApagarActionPerformed
 
-    private void JTableAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTableAlterarActionPerformed
+    private void JBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAlterarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JTableAlterarActionPerformed
+    }//GEN-LAST:event_JBAlterarActionPerformed
 
-    private void JTableCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTableCancelarActionPerformed
+    private void JBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCancelarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_JTableCancelarActionPerformed
+    }//GEN-LAST:event_JBCancelarActionPerformed
+
+    private void JTableAlunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableAlunosMouseClicked
+        if (this.JTableAlunos.getSelectedRow() != -1) {
+            String nome = this.JTableAlunos.getValueAt(this.JTableAlunos.getSelectedRow(), 1).toString();
+            String idade = this.JTableAlunos.getValueAt(this.JTableAlunos.getSelectedRow(), 2).toString();
+            String curso = this.JTableAlunos.getValueAt(this.JTableAlunos.getSelectedRow(), 3).toString();
+            String fase = this.JTableAlunos.getValueAt(this.JTableAlunos.getSelectedRow(), 4).toString();
+            this.JTFnome.setText(nome);
+            this.JTFidade.setText(idade);
+            this.JTFcurso.setText(curso);
+            this.JTFfase.setText(fase);
+        }
+    }//GEN-LAST:event_JTableAlunosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -210,16 +240,24 @@ public class FrmGerenciaAluno extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmGerenciaAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmGerenciaAluno.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmGerenciaAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmGerenciaAluno.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmGerenciaAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmGerenciaAluno.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmGerenciaAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmGerenciaAluno.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -232,18 +270,18 @@ public class FrmGerenciaAluno extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBAlterar;
+    private javax.swing.JButton JBApagar;
+    private javax.swing.JButton JBCancelar;
     private javax.swing.JTextField JTFcurso;
     private javax.swing.JTextField JTFfase;
     private javax.swing.JTextField JTFidade;
     private javax.swing.JTextField JTFnome;
-    private javax.swing.JButton JTableAlterar;
-    private javax.swing.JButton JTableApagar;
-    private javax.swing.JButton JTableCancelar;
+    private javax.swing.JTable JTableAlunos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

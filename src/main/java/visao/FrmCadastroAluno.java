@@ -204,7 +204,6 @@ public class FrmCadastroAluno extends javax.swing.JFrame {
         } catch (NumberFormatException erro2) {
             JOptionPane.showMessageDialog(null, "Informe um número válido.");
         }
-
     }//GEN-LAST:event_JBCadastrarActionPerformed
 
     /**

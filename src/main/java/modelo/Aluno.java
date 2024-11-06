@@ -49,7 +49,7 @@ public class Aluno extends Pessoa {
     public ArrayList<Aluno> getMinhaLista() {
         return AlunoDAO.getMinhaLista();
     }
-    
+
 // Cadastra novo aluno
     public boolean insertAlunoBD(String nome, int idade, String curso, int fase) {
         int id = this.maiorID() + 1;
@@ -57,14 +57,14 @@ public class Aluno extends Pessoa {
         getMinhaLista().add(objeto);
         return true;
     }
-    
+
 // Deleta um aluno específico pelo seu campo ID
     public boolean deleteAlunoBD(int id) {
         int indice = this.procuraIndice(id);
         getMinhaLista().remove(indice);
         return true;
     }
-    
+
     // Edita um aluno específico pelo seu campo ID
     public boolean updateAlunoBD(int id, String nome,
             int idade, String curso, int fase) {
@@ -73,7 +73,7 @@ public class Aluno extends Pessoa {
         getMinhaLista().set(indice, objeto);
         return true;
     }
-    
+
 // procura o INDICE de objeto da minhaLista que
 // contem o ID enviado.
     private int procuraIndice(int id) {
@@ -85,19 +85,15 @@ public class Aluno extends Pessoa {
         }
         return indice;
     }
-    
+
 // carrega dados de um aluno específico pelo seu ID
     public Aluno carregaAluno(int id) {
         int indice = this.procuraIndice(id);
         return getMinhaLista().get(indice);
     }
-    
+
 // retorna o maior ID da nossa base de dados
     public int maiorID() {
         return AlunoDAO.maiorID();
-    }
-
-    public int getId() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
